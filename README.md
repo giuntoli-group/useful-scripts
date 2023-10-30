@@ -53,5 +53,14 @@ function send_to_snellius(){
   
   rsync -rph --progress $1 nvengall@snellius.surf.nl:/home/nvengall/$2
 }
-
 ```
+## High resolution rendering using Ovito
+
+There are three rendering engines in Ovito. Only the basic one is available in the free version.
+However, you can access the other two renderers using an old version of Ovito. Steps to do that are
+as follows:
+
+* Download Ovito-2.9.0 version named _ovito-2.9.0-x86_64.tar.xz_ from the [Ovito downloads page](https://www.ovito.org/download-other/) or from [this](https://www.ericnhahn.com/tutorials/ovito) alternate link.
+* Extract the tar file using `tar -xvf ovito-2.9.0-x86_64.tar.xz`
+* Load a file to Ovito and switch renderer to either Tachyon renderer or POV-Ray renderer
+
