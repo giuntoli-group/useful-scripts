@@ -38,3 +38,21 @@ def find_dependency_id(job_name, dependent_on, squeue_output):
         if dependent_job_name in running_job_name:
             
             return running_job_slurmid
+
+def construct_dependency_string(job, dependent_on, squeue_output):
+    if dependent_on == None:
+        # if the operation does not depend on any others
+        dependency_string = ''
+    
+    else:
+        dependency_id = find_dependency_id(job.id, dependent_on, squeue_output)
+        
+        if dependency_id:
+            # if the dependent job is still running
+            dependency_string =  f' -- --dependency=afterok:{dependency_id}'
+        else:
+            dependency_string = ''
+    
+    return dependency_string
+
+
