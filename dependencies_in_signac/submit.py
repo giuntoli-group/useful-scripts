@@ -1,30 +1,22 @@
 import signac
 import subprocess
-from tools import fetch_squeue, find_dependency_id
+from tools import fetch_squeue, construct_dependency_string
 
 def submit(eligible_jobs,squeue_output, operation=None, dependent_on=None):
     
-    if dependent_on == None:
-        
-        for job in eligible_jobs:
-            
-            subprocess.run(f'python project.py submit -o {operation} -j {job.id}', shell=True)
-        
-    else:
-        
-        # submit each job individually with it's dependency 
-        for job in eligible_jobs:
-            
-            dependency_id = find_dependency_id(job.id, dependent_on, squeue_output)
-            
-            # dependent job is already finished
-            if dependency_id == None:
-                subprocess.run(f'python project.py submit -o {operation} -j {job.id}', shell=True)
-            
-            else:
-                subprocess.run(f'python project.py submit -o {operation} -j {job.id} -- --dependency={dependency_id}', shell=True)
+    operation_string = f'python project.py submit -o {operation}'
+    
+    # swap template if postprocessing; must define a template first
+    template_string = ' --template postprocess.sh' if operation == 'postprocess' else ''
 
+    # submit each job individually with it's dependency
+    for job in eligible_jobs:
         
+        job_string = f' -j {job.id}'
+        dependency_string = construct_dependency_string(job, dependent_on, squeue_output)
+        total_string = operation_string + job_string + template_string + dependency_string
+       
+        subprocess.run(total_string, shell=True)
 
 project = signac.get_project()
 eligible_jobs = project.find_jobs()
