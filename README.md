@@ -64,3 +64,25 @@ as follows:
 * Extract the tar file using `tar -xvf ovito-2.9.0-x86_64.tar.xz`
 * Load a file to Ovito and switch renderer to either Tachyon renderer or POV-Ray renderer
 
+## Chain Signac operations
+
+Run another signac operation once the current one is finished. This can be useful to
+automate postprocessing operations after the simulation is complete. This is done using
+[hooks](https://docs.signac.io/en/latest/hooks.html) from Signac
+
+```python
+import subprocess
+
+def submit_next_operation(operation_name, job):
+  command = ['python', 'project.py', 'submit', '-o', 'run2', '-j', f'{job.id}']
+  subprocess.check_call(command)
+
+@Project.operation
+@Project.operation_hooks.on_success(submit_next_operation)
+def run1(job):
+  pass
+
+@Project.operation
+def run2(job):
+  pass
+```
