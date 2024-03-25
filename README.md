@@ -63,6 +63,7 @@ as follows:
 * Download Ovito-2.9.0 version named _ovito-2.9.0-x86_64.tar.xz_ from the [Ovito downloads page](https://www.ovito.org/download-other/) or from [this](https://www.ericnhahn.com/tutorials/ovito) alternate link.
 * Extract the tar file using `tar -xvf ovito-2.9.0-x86_64.tar.xz`
 * Load a file to Ovito and switch renderer to either Tachyon renderer or POV-Ray renderer
+* Increasing the height and width of the render will increase the quality as well!
 
 ## Chain Signac operations
 
