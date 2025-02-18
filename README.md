@@ -41,7 +41,7 @@ view(){
   # view data file from cluster without explicit download
   # call like: view <data-file>
     p=${PWD}
-    ssh -q -X nayan@mm48.phys.rug.nl "ovito sftp://nvengall@snellius.surf.nl${p}/$1"
+    ssh -q -X <username>@mm48.phys.rug.nl "ovito sftp://<username>@snellius.surf.nl${p}/$1"
 }
 ```
 
@@ -51,7 +51,7 @@ function send_to_snellius(){
   # call like: send_to_snellius <file-to-send> <destination>
   # default destination is home directory of the cluster
   
-  rsync -rph --progress $1 nvengall@snellius.surf.nl:/home/nvengall/$2
+  rsync -rph --progress $1 nvengall@snellius.surf.nl:/home/<username>/$2
 }
 ```
 ## High resolution rendering using Ovito
